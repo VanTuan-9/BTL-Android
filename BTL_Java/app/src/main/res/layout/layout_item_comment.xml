@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingHorizontal="10dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <LinearLayout
+            android:layout_weight="6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="64dp">
+                <ImageView
+                    android:id="@+id/img_icon_account"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/anh1"
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tv_username_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="VanTuan-9"
+                android:layout_marginLeft="10dp"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_time_comment"
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="4 giờ trước"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:gravity="right"
+            android:textStyle="italic"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_content_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We are also concerned about the individual in possession of an encrypted hard drive who refuses to hand over plain text."
+        android:textColor="@android:color/holo_blue_light"
+        android:textSize="16dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginHorizontal="10dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginVertical="8dp"
+        />
+
+</LinearLayout>

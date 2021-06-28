@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/background_game"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:ignore="MissingDefaultResource"
+    android:orientation="vertical"
+    android:weightSum="20">
+
+    <TextView
+        android:layout_weight="4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:text="Đố vui có thưởng."
+        android:gravity="center"
+        android:textColor="@android:color/holo_blue_light"
+        android:background="@null"
+        android:textSize="40sp"
+        android:textStyle="italic|bold"
+        android:textAllCaps="false"
+        android:fontFamily="serif"
+        />
+
+    <LinearLayout
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:weightSum="10"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Chẵn"
+            android:textColor="@android:color/white"
+            android:background="@null"
+            android:textSize="40sp"
+            android:textStyle="italic|bold"
+            android:textAllCaps="false"
+            android:fontFamily="serif"/>
+
+        <RelativeLayout
+            android:layout_weight="4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/background_icon_number_cl">
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:text="1"
+                android:textColor="@android:color/black"
+                android:background="@drawable/dia1"
+                android:textSize="40sp"
+                android:textStyle="italic|bold"
+                android:textAllCaps="false"
+                android:fontFamily="serif"
+                android:gravity="center"
+                />
+        </RelativeLayout>
+
+        <Button
+            android:layout_weight="3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Lẻ"
+            android:textColor="@android:color/holo_blue_light"
+            android:background="@null"
+            android:textSize="40sp"
+            android:textStyle="italic|bold"
+            android:textAllCaps="false"
+            android:fontFamily="serif"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_weight="6"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:paddingHorizontal="10dp"
+        android:background="@drawable/custom_background_game_1">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ID: VanTuan"
+            android:textColor="@android:color/white"
+            android:background="@null"
+            android:textSize="20sp"
+            android:textStyle="italic|bold"
+            android:textAllCaps="false"
+            android:fontFamily="serif"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:fontFamily="serif"
+            android:text="point: 10"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="20sp"
+            android:textStyle="italic|bold" />
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="64dp"
+            android:layout_alignParentRight="true">
+
+            <ImageButton
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/rsz_start"
+                android:scaleType="center"
+                />
+        </androidx.cardview.widget.CardView>
+    </RelativeLayout>
+</LinearLayout>

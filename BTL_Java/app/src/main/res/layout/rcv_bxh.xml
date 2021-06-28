@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl_item_bxh"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginVertical="2dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/img_book_bxh"
+        android:layout_width="?attr/actionBarSize"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/image_book" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginHorizontal="10dp"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/img_book_bxh">
+
+        <TextView
+            android:id="@+id/tv_name_book_bxh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="7 cấp độ giao tiếp để thành công"
+            android:textSize="15sp"
+            android:textColor="@android:color/holo_blue_light"
+            android:textStyle="bold"
+            android:fontFamily="monospace"
+            android:maxLines="2"
+            android:ellipsize="marquee"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:id="@+id/tv_author_book_bxh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Author"
+                android:layout_alignParentLeft="true"
+                android:textSize="17sp"
+                android:textColor="@android:color/darker_gray"
+                android:textStyle="bold"
+                android:maxLength="100"
+                android:ellipsize="marquee"/>
+            <TextView
+                android:id="@+id/tv_like_book_bxh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="20K"
+                android:layout_alignParentRight="true"
+                android:textSize="17sp"
+                android:textColor="@android:color/holo_red_light"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <TextView
+        android:id="@+id/tv_rank_bxh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textColor="@android:color/white"
+        android:background="@android:color/holo_red_light"
+        android:layout_marginVertical="5dp"
+        android:paddingHorizontal="3dp"
+        />
+</RelativeLayout>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:padding="10dp"
+        android:layout_marginVertical="5dp"
+    >
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/imgAvtUserCmt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/logo2"
+            app:civ_border_width="3dp"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"/>
+        <RelativeLayout
+            android:id="@+id/UserCmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/imgAvtUserCmt">
+            <TextView
+                android:id="@+id/UserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UserName"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:textSize="15dp" />
+            <TextView
+                android:id="@+id/Cmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/UserName"
+                android:text="Hay quá"
+                android:textColor="@color/black"
+                android:textSize="15dp">
+            </TextView>
+            <TextView
+                android:id="@+id/Time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/Cmt"
+                android:text="Th1 28,2020 lúc 4:22 PM"
+                android:textColor="#919191"
+                android:textSize="10dp"/>
+        </RelativeLayout>
+        <ImageView
+            android:id="@+id/menu"
+            android:layout_width="20dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/menu"
+            android:layout_marginTop="-10dp"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>

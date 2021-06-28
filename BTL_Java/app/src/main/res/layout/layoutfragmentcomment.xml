@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4EEE5">
+        <RelativeLayout
+            android:id="@+id/totalCmt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:padding="15dp"
+            android:layout_marginBottom="10dp">
+            <TextView
+                android:id="@+id/tvTotalCmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#BF000000"
+                android:textSize="25dp"
+                android:textStyle="bold">
+            </TextView>
+            <TextView
+                android:id="@+id/tvCmt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" Bình luận"
+                android:textColor="#BF000000"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:layout_toRightOf="@+id/tvTotalCmt"
+                >
+            </TextView>
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcCmt"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/totalCmt"
+            android:layout_marginBottom="60dp">
+        </androidx.recyclerview.widget.RecyclerView>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/imgAvtUser"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/logo2"
+                app:civ_border_width="3dp"
+                android:layout_marginRight="10dp"
+                android:layout_centerVertical="true"/>
+            <EditText
+                android:id="@+id/tvWriteCmt"
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/imgAvtUser"
+                android:hint="Đăng một bình luận..."
+                android:layout_centerVertical="true"
+                android:padding="10dp"
+                android:textColor="@color/black"
+                android:background="@drawable/circle"
+                android:layout_marginTop="10dp"
+                android:imeOptions="actionDone">
+            </EditText>
+            <ImageView
+                android:id="@+id/imgSend"
+                android:layout_width="55dp"
+                android:layout_height="55dp"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/send"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true">
+            </ImageView>
+
+        </RelativeLayout>
+
+    </RelativeLayout>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/border_account"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+            <TextView
+                android:id="@+id/tvChange"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đổi tên đăng nhập"
+                android:textSize="19dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"/>
+            <EditText
+                android:id="@+id/edtChangeUsername"
+                android:layout_below="@+id/tvChange"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:text="username"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_margin="10dp"
+                android:layout_centerHorizontal="true"
+                android:background="#C1E8E5E5"
+                android:padding="7dp"/>
+            <TextView
+                android:id="@+id/tvCancel"
+                android:layout_below="@+id/edtChangeUsername"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hủy"
+                android:textColor="@color/black"
+                android:textSize="18dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginBottom="10dp"
+                >
+            </TextView>
+            <TextView
+                android:id="@+id/tvSubmit"
+                android:layout_below="@+id/edtChangeUsername"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Xác nhận"
+                android:textColor="#DC0A0A"
+                android:textSize="18dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="100dp"
+                android:layout_marginBottom="10dp"
+                >
+            </TextView>
+        </RelativeLayout>
+
+    </RelativeLayout>
+</layout>

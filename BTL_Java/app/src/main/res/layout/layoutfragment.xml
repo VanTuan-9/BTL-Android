@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F4EEE5"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/acbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:background="@color/black">
+        <ImageView
+            android:id="@+id/imgBack"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/leftarrowwhite"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"/>
+        <TextView
+            android:id="@+id/tvTenSach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_toRightOf="@+id/imgBack"
+            android:text="Tên sách"
+            android:layout_centerVertical="true"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"/>
+
+    </RelativeLayout>
+    <ScrollView
+        android:id="@+id/parentScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_below="@+id/acbar">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/imgAvt"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo2" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#F4EEE5"
+                    android:layout_below="@+id/imgAvt">
+
+                    <RelativeLayout
+
+                        android:id="@+id/LOIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true">
+
+                        <RelativeLayout
+                            android:id="@+id/LuotXem"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginRight="20dp">
+
+                            <ImageView
+                                android:id="@+id/icLuotXem"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/view" />
+
+                            <TextView
+                                android:id="@+id/tvLuotXem"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/icLuotXem"
+                                android:text="8,46K"
+                                android:textColor="@color/black" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/LuotThich"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:layout_marginRight="20dp"
+                            android:layout_toRightOf="@+id/LuotXem">
+
+                            <ImageView
+                                android:id="@+id/icLuotThich"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_centerVertical="true"
+                                android:src="@drawable/heartt" />
+
+                            <TextView
+                                android:id="@+id/tvLuotThich"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/icLuotThich"
+                                android:text="110"
+                                android:textColor="@color/black" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/LuotBinhLuan"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="40dp"
+                            android:layout_toRightOf="@+id/LuotThich">
+
+                            <ImageView
+                                android:id="@+id/icLuotBinhLuan"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/speechbubble" />
+
+                            <TextView
+                                android:id="@+id/tvLuotBinhLuan"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/icLuotBinhLuan"
+                                android:text="18"
+                                android:textColor="@color/black" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/LOND"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/LOIcon"
+                        android:layout_marginTop="60dp">
+                        <ScrollView
+                            android:id="@+id/childScroll"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fillViewport="true">
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                                <TextView
+                                    android:id="@+id/tvNoiDung"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:padding="30dp"
+                                    android:text="Đây là nội dung sách "
+                                    android:textColor="#CE000000"
+                                    android:textSize="18dp">
+                                </TextView>
+                            </RelativeLayout>
+                        </ScrollView>
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/LOMenu"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/LOND"
+                        android:layout_centerHorizontal="true"
+                        android:padding="40dp">
+
+                        <RelativeLayout
+                            android:id="@+id/Heart"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="100dp">
+
+                            <ImageView
+                                android:id="@+id/icHeart"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/heartcam" />
+
+                            <TextView
+                                android:id="@+id/tvHeart"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/icHeart"
+                                android:layout_marginTop="5dp"
+                                android:text="110"
+                                android:textColor="#FA6D04" />
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/comment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toRightOf="@+id/Heart">
+
+                            <ImageView
+                                android:id="@+id/icComment"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/speechbubblecam" />
+
+                            <TextView
+                                android:id="@+id/tvComment"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/icComment"
+                                android:layout_marginTop="5dp"
+                                android:text="18"
+                                android:textColor="#FA6D04" />
+                        </RelativeLayout>
+                    </RelativeLayout>
+                </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

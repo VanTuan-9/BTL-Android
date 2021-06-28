@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F4EEE5">
+        <RelativeLayout
+            android:id="@+id/LO1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/black">
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/leftarrowwhite"
+                android:padding="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/back"
+                android:layout_centerVertical="true"
+                android:text="Mua hàng xu"
+                android:textColor="@color/white"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcXu"
+            android:layout_below="@+id/LO1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+        </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:layout_below="@+id/rcXu"
+            android:padding="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Có vấn đề khi nạp xu vui lòng liên hệ 1900100 có."
+            android:textColor="@color/black"
+            android:textSize="13dp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
+</layout>

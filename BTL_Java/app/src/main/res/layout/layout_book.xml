@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <RelativeLayout
+            android:layout_weight="3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <ImageView
+                android:id="@+id/img_background_item_book"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/image_book2"
+                android:scaleType="centerCrop"
+                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="10"
+                android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="7"
+                    android:orientation="horizontal"
+                    android:background="@drawable/custom_down_background_item_book"
+                    >
+
+                    <ImageView
+                        android:id="@+id/img_item_book"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:src="@drawable/image_book"
+                        android:layout_marginLeft="64dp"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_name_item_book"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Nghệ thuật lấy lòng khách hàng."
+                            android:textColor="@android:color/holo_orange_light"
+                            android:textStyle="italic"
+                            android:textSize="20dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            />
+                        <TextView
+                            android:id="@+id/tv_author_item_book"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Văn Tuấn."
+                            android:textColor="@android:color/white"
+                            android:textStyle="italic"
+                            android:textSize="15dp"
+                            android:maxLines="2"
+                            android:ellipsize="end"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal"
+                            android:weightSum="10"
+                            android:gravity="center">
+
+                            <TextView
+                                android:id="@+id/tv_view_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_icon_like_view"
+                                android:drawableLeft="@drawable/ic_baseline_remove_red_eye_24"
+                                android:paddingLeft="5dp"
+                                android:paddingVertical="5dp"
+                                android:layout_marginRight="5dp"
+                                android:drawableTint="@android:color/holo_red_light"
+                                android:text="57.2k"
+                                android:gravity="center"
+                                android:textColor="@android:color/holo_green_dark"/>
+                            <TextView
+                                android:id="@+id/tv_like_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/background_icon_like_view"
+                                android:drawableLeft="@drawable/ic_baseline_favorite_24"
+                                android:paddingLeft="5dp"
+                                android:paddingVertical="5dp"
+                                android:layout_marginRight="5dp"
+                                android:drawableTint="@android:color/holo_red_light"
+                                android:text="57.2k"
+                                android:gravity="center"
+                                android:textColor="@android:color/holo_green_dark"/>
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_weight="7"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@android:color/holo_blue_light">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_short_item_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:maxLines="3"
+                        android:ellipsize="end"
+                        android:text="Bạn đang đọc truyện Một Nửa Chữa Lành Là Đau Thương của tác giả Vi. Mẹ cô là một vũ nữ ở hộp đêm còn ba cô là một người đã có vợ nhưng lại đến và dây dưa với mẹ cô. Gặp gỡ, trò chuyện sau đó lên giường với nhau. Kết quả ngoài ý muốn đó chính là Mễ An! Mẹ cô sợ hãi muốn đi phá thai, nhưng lại ham mê phú quý hào hoa nơi ba cô.
+
+Quyết định lấy đứa bé ra để uy hiếp và ràng buộc ba cô ly dị với vợ. Cuối cùng vẫn chính là không thành công, ông ta ném xấp tiền vào mặt mẹ cô đuổi đi. Mẹ cô túng quẫn đi vào đường cùng rồi vứt cô ở trước cổng cô nhi viện.
+
+Mễ An được nhận vào cô nhi viện và được chẩn đoán là chấn thương tâm lý, luôn luôn sợ hãi rụt rè khi tiếp xúc với mọi người.
+
+Cuộc đời của Mễ An từ nhỏ đến lớn đều là màu xám bạc mù mịt không thấy đích đến, cho đến khi gặp Khang Duật. Gặp Khang Duật là khi cô vào trường đại học. Anh chơi bóng rổ rồi vô tình trái bóng trúng vào đầu cô, từ đó cô và anh gặp nhau cũng là lúc Mễ An được Khang Duật cứu vớt ra khỏi hố đen trũng sâu của cuộc đời!
+
+Cứ tưởng sẽ tìm được hành phúc đời mình, nhưng Mễ An nào ngờ đó chỉ mới là bắt đầu của những chuỗi ngày sóng gió tiếp theo…"
+                        android:layout_marginHorizontal="10dp"
+                        android:textColor="@android:color/white"
+                        android:typeface="serif"
+                        android:layout_marginTop="15dp"
+                        />
+
+                    <ImageButton
+                        android:id="@+id/ibtn_more_item_book"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_baseline_expand_more_24"
+                        android:background="@null"
+                        android:tint="@android:color/holo_red_light"
+                        />
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:background="@android:color/white"
+                        android:layout_marginVertical="2dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:paddingVertical="10dp"
+                        android:layout_marginVertical="10dp"
+                        android:background="@drawable/background_item_ct_book">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Thông tin chi tiết"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="5dp"
+                            android:paddingLeft="5dp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Ngày xuất bản "
+                                />
+                            <TextView
+                                android:id="@+id/tv_dayXB_detail_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="06/05/2021"
+                                android:gravity="end"
+                                />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Tác giả"
+                                />
+                            <TextView
+                                android:id="@+id/tv_author_detail_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Văn Tuấn"
+                                android:gravity="end"
+                                />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Số chương"
+                                />
+                            <TextView
+                                android:id="@+id/tv_numberPages_detail_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="30 trang"
+                                android:gravity="end"
+                                />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Tuyển tập"
+                                />
+                            <TextView
+                                android:id="@+id/tv_type_detail_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Đọc nhiều"
+                                android:gravity="end"
+                                />
+                        </LinearLayout>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:weightSum="10">
+
+                            <TextView
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="Tên NXB"
+                                />
+                            <TextView
+                                android:id="@+id/tv_NXB_detail_item_book"
+                                android:layout_weight="5"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginHorizontal="10dp"
+                                android:textColor="@android:color/white"
+                                android:typeface="serif"
+                                android:text="NXB Kim Đồng"
+                                android:gravity="end"
+                                />
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="10dp"
+                        android:paddingVertical="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:background="@drawable/background_item_ct_book">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Bình luận"
+                            android:textColor="@android:color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="5dp"
+                            android:paddingLeft="5dp"/>
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/white"
+                            android:layout_marginVertical="8dp"
+                            />
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rcv_comment_item_book"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:background="@android:color/darker_gray"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_read_book"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="Đọc sách"
+        android:background="@drawable/btn_docsach"
+        android:layout_marginBottom="10dp"
+        />
+</RelativeLayout>
