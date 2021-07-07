@@ -48,21 +48,11 @@
                 android:id="@+id/edtmkm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nhập mật khẩu mới"
+                android:hint="Nhập email của bạn..."
                 android:textColorHint="#7E7E7E"
                 android:textColor="@color/black"
                 android:textSize="15dp"
                 >
-            </EditText>
-            <EditText
-                android:id="@+id/edtnlmk"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/edtmkm"
-                android:hint="Nhập lại mật khẩu mới"
-                android:textColor="@color/black"
-                android:textColorHint="#7E7E7E"
-                android:textSize="15dp">
             </EditText>
         </RelativeLayout>
         <TextView

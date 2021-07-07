@@ -9,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     String urlBook = "https://api-book-last-comment.herokuapp.com/api/books";
     List<Book> books = new ArrayList<>();
-    User user;
+    List<User> users = new ArrayList<>();
     LinearLayout ln_home;
 //    List<ContentBook> contentBooks = new ArrayList<>();
     Dialog dialog;
@@ -61,8 +62,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tablayout);
 
         Intent intent = getIntent();
-        user = intent.getParcelableExtra("User");
-        NewUser(user);
+        String name = intent.getStringExtra("UserName");
         dialog = new Dialog(this);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.progressbar_load_login);
@@ -79,42 +79,31 @@ public class MainActivity extends AppCompatActivity {
         Sprite style = new ThreeBounce();
         progressBar.setIndeterminateDrawable(style);
         ln_home.setVisibility(View.GONE);
+        NewUser(name);
         dialog.show();
-        GetAPIBook(urlBook);
     }
 
-    private void NewUser(final User user) {
-        String url = "https://api-book-last-comment.herokuapp.com/api/books/"+user.getId();
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    User user1 = new User(response.getInt("userID"),
-                                        response.getString("userName"),
-                            response.getString("passWord"),
-                            response.getInt("money"),
-                            response.getString("email"),
-                            response.getString("phoneNumber"),
-                            response.getString("linkImage"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        JsonVolley.getInstance(getApplicationContext()).getRequestQueue().add(request);
-    }
-
-    private void GetAPIBook(String urlBook){
-        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlBook, null,
+    private void NewUser(final String name) {
+        final String url = "https://api-user-last.herokuapp.com/api/users";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        ChangeJson(response);
+                        try {
+                            for (int i = 0; i < response.length(); i++) {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                users.add(new User(jsonObject.getInt("userID"),
+                                        jsonObject.getString("userName"),
+                                        jsonObject.getString("passWord"),
+                                        jsonObject.getInt("money"),
+                                        jsonObject.getString("email"),
+                                        jsonObject.getString("phoneNumber"),
+                                        jsonObject.getString("linkImage")));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        GetAPIBook(urlBook,name);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -124,7 +113,23 @@ public class MainActivity extends AppCompatActivity {
         });
         JsonVolley.getInstance(getApplicationContext()).getRequestQueue().add(request);
     }
-    void ChangeJson(JSONArray jsonArray){
+
+    private void GetAPIBook(String urlBook, final String name){
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, urlBook, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        ChangeJson(response,name);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        JsonVolley.getInstance(getApplicationContext()).getRequestQueue().add(request);
+    }
+    void ChangeJson(JSONArray jsonArray, String name){
         JSONObject jsonObject;
         for (int i = 0;i< jsonArray.length();i++){
             try {
@@ -149,12 +154,30 @@ public class MainActivity extends AppCompatActivity {
         }
         ln_home.setVisibility(View.VISIBLE);
         dialog.dismiss();
-        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,books,user);
+        User user = new User();
+        for (int i = 0; i < users.size(); i++) {
+            if(users.get(i).getUsername().equals(name)){
+                user = users.get(i);
+                break;
+            }
+        }
+        FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,user,books);
         viewPager.setAdapter(fragmentAdapter);
         tabLayout.setupWithViewPager(viewPager);
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(viewPager));
         tabLayout.getTabAt(0).setIcon(R.drawable.ic_baseline_home_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.ic_baseline_search_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.ic_baseline_backup_24);
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_baseline_account_circle_24);
+//        View view = tabLayout.getChildAt(0);
+//        if (view instanceof LinearLayout){
+//            ((LinearLayout)view).setShowDividers(LinearLayout.SHOW_DIVIDER_MIDDLE);
+//            GradientDrawable drawable = new GradientDrawable();
+//            drawable.setColor(getResources().getColor(R.color.tabcolor));
+//            drawable.setSize(2, 1);
+//            ((LinearLayout) view).setDividerPadding(10);
+//            ((LinearLayout) view).setDividerDrawable(drawable);
+//        }
     }
 }

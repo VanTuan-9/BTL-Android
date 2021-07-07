@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.example.btl_java.JsonVolley;
 import com.example.btl_java.R;
 import com.example.btl_java.RecycleView.Home.ListChild.Book;
 import com.example.btl_java.RecycleView.Home.ListChild.ContentBook;
@@ -28,13 +34,17 @@ import com.example.btl_java.RecycleView.Search.Adapter;
 import com.example.btl_java.RecycleView.Search.AdapterSearched;
 import com.example.btl_java.login.User;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class SearchFragment extends Fragment {
 
-    List<Book> books;
+    List<Book> books = new ArrayList<>();
     User user;
     List<ContentBook> contentBooks;
     RecyclerView rcv_all_item_search;
@@ -45,10 +55,9 @@ public class SearchFragment extends Fragment {
     TextView infor_search;
     RecyclerView rcv_item_search;
 
-    public static SearchFragment newInstance(List<Book> books, User user) {
+    public static SearchFragment newInstance(User user) {
 
         Bundle args = new Bundle();
-        args.putParcelableArrayList("books", (ArrayList<? extends Parcelable>) books);
         args.putParcelable("User",user);
 //        args.putParcelableArrayList("contentBooks", (ArrayList<? extends Parcelable>) contentBooks);
         SearchFragment fragment = new SearchFragment();
@@ -68,57 +77,94 @@ public class SearchFragment extends Fragment {
         infor_search = view.findViewById(R.id.infor_search);
         rcv_item_search = view.findViewById(R.id.rcv_item_search);
 
-        books = getArguments().getParcelableArrayList("books");
         user = getArguments().getParcelable("User");
+
+        GetAPI(user);
 //        contentBooks = getArguments().getParcelableArrayList("contentbooks");
-        final RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-        Adapter adapter = new Adapter(books,getContext(),user);
-        rcv_all_item_search.setAdapter(adapter);
-        rcv_all_item_search.setLayoutManager(manager);
 
-        edt_search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        return view;
+    }
 
-            }
+    private void GetAPI(final User user) {
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, "https://api-book-last-comment.herokuapp.com/api/books", null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                books.add(new Book(jsonObject.getInt("id"),
+                                        jsonObject.getString("nameBook"),
+                                        jsonObject.getString("linkBook"),
+                                        jsonObject.getString("author"),
+                                        jsonObject.getString("publishingCompany"),
+                                        jsonObject.getString("language"),
+                                        jsonObject.getString("createAt"),
+                                        jsonObject.getInt("numberOfPages"), 1,
+                                        jsonObject.getInt("viewBook"),
+                                        jsonObject.getInt("likeBook"),
+                                        jsonObject.getString("contentBook"),
+                                        jsonObject.getString("updateAt"),
+                                        jsonObject.getString("describeBook")));
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        final RecyclerView.LayoutManager manager = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+                        Adapter adapter = new Adapter(books,getContext(),user);
+                        rcv_all_item_search.setAdapter(adapter);
+                        rcv_all_item_search.setLayoutManager(manager);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        edt_search.addTextChangedListener(new TextWatcher() {
+                            @Override
+                            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+                            }
 
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void afterTextChanged(Editable s) {
-                TransitionManager.beginDelayedTransition((ViewGroup) getView());
-                if(s.length() == 0){
-                    ln_search.setVisibility(View.VISIBLE);
-                    infor_search.setVisibility(View.GONE);
-                    rcv_item_search.setVisibility(View.GONE);
-                }
-                else{
-                    List<Book> books_search = new ArrayList<>();
-                    for (int i = 0; i < books.size(); i++) {
-                        if(removeAccent(books.get(i).getNameBook()).toLowerCase().contains(removeAccent(s.toString().toLowerCase())))
-                            books_search.add(books.get(i));
+                            @Override
+                            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                            }
+
+                            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+                            @Override
+                            public void afterTextChanged(Editable s) {
+                                TransitionManager.beginDelayedTransition((ViewGroup) getView());
+                                if(s.length() == 0){
+                                    ln_search.setVisibility(View.VISIBLE);
+                                    infor_search.setVisibility(View.GONE);
+                                    rcv_item_search.setVisibility(View.GONE);
+                                }
+                                else{
+                                    List<Book> books_search = new ArrayList<>();
+                                    for (int i = 0; i < books.size(); i++) {
+                                        if(removeAccent(books.get(i).getNameBook()).toLowerCase().contains(removeAccent(s.toString().toLowerCase())))
+                                            books_search.add(books.get(i));
+                                    }
+                                    ln_search.setVisibility(View.GONE);
+                                    infor_search.setVisibility(View.VISIBLE);
+
+                                    if(books_search.size() == 0)
+                                        infor_search.setText("Không tồn tại!");
+                                    else
+                                        infor_search.setText("Có " + books_search.size() + " kết quả phù hợp.");
+                                    rcv_item_search.setVisibility(View.VISIBLE);
+                                    RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+                                    AdapterSearched adapterSearched = new AdapterSearched(books_search,getContext(),user);
+                                    rcv_item_search.setLayoutManager(manager1);
+                                    rcv_item_search.setAdapter(adapterSearched);
+                                }
+                            }
+                        });
+                        rcv_item_search.setItemViewCacheSize(0);
                     }
-                    ln_search.setVisibility(View.GONE);
-                    infor_search.setVisibility(View.VISIBLE);
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
 
-                    if(books_search.size() == 0)
-                        infor_search.setText("Không tồn tại!");
-                    else
-                        infor_search.setText("Có " + books_search.size() + " kết quả phù hợp.");
-                    rcv_item_search.setVisibility(View.VISIBLE);
-                    RecyclerView.LayoutManager manager1 = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-                    AdapterSearched adapterSearched = new AdapterSearched(books_search,getContext(),user);
-                    rcv_item_search.setLayoutManager(manager1);
-                    rcv_item_search.setAdapter(adapterSearched);
-                }
             }
         });
-        rcv_item_search.setItemViewCacheSize(0);
-        return view;
+        JsonVolley.getInstance(getContext()).getRequestQueue().add(request);
     }
 
     private static final char[] SOURCE_CHARACTERS = {'À', 'Á', 'Â', 'Ã', 'È', 'É',

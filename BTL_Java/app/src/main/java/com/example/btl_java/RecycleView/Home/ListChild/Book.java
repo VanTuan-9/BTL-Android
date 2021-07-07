@@ -42,6 +42,7 @@ public class Book implements Parcelable {
         this.shortContent = shortContent;
     }
 
+
     protected Book(Parcel in) {
         idBook = in.readInt();
         nameBook = in.readString();

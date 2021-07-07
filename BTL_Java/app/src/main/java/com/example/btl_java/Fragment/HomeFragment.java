@@ -20,7 +20,6 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,7 +39,6 @@ import com.example.btl_java.R;
 import com.example.btl_java.RecycleView.Home.AutoScrollBook.Adapter;
 import com.example.btl_java.RecycleView.Home.BXH.AdapterBXH;
 import com.example.btl_java.RecycleView.Home.ListChild.Book;
-import com.example.btl_java.RecycleView.Home.ListChild.ContentBook;
 import com.example.btl_java.login.ActivityLogin;
 import com.example.btl_java.login.User;
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -50,7 +48,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -67,7 +64,6 @@ public class HomeFragment extends Fragment {
     ScrollView scroll_home;
     RelativeLayout rel_home;
     ImageButton ibtn_back;
-    Dialog dialog;
     LinearLayout ln_home_fragment;
     List<Book> books = new ArrayList<>();
     User user = new User();
@@ -79,11 +75,12 @@ public class HomeFragment extends Fragment {
     Adapter adapter;
     String urlBook = "https://api-book-last-comment.herokuapp.com/api/books";
 
-    public static HomeFragment newInstance(List<Book> books,User user) {
+
+
+    public static HomeFragment newInstance(User user, List<Book> books) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList("books", (ArrayList<? extends Parcelable>) books);
         args.putParcelable("User", user);
-//        args.putParcelableArrayList("contentBooks", (ArrayList<? extends Parcelable>) contentBooks);
+        args.putParcelableArrayList("Books", (ArrayList<? extends Parcelable>) books);
         HomeFragment fragment = new HomeFragment();
         fragment.setArguments(args);
         return fragment;
@@ -109,26 +106,107 @@ public class HomeFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent =new Intent(getContext(), ActivityLogin.class);
                 startActivity(intent);
+
             }
         });
         user = getArguments().getParcelable("User");
-        dialog = new Dialog(getContext());
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.progressbar_load_login);
-        Window window = dialog.getWindow();
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT,WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        WindowManager.LayoutParams layoutParams =window.getAttributes();
-        layoutParams.gravity = Gravity.CENTER;
-        window.setAttributes(layoutParams);
-        dialog.setCancelable(false);
+        books = getArguments().getParcelableArrayList("Books");
+        List<String> list_img_book = new ArrayList<>();
+        for (int i = 0;i< books.size();i++)
+            list_img_book.add(books.get(i).getUrlBook());
+        manager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
+        adapter = new Adapter(getContext(),list_img_book);
+        rcv_auto_scroll_image_book.setLayoutManager(manager);
+        rcv_auto_scroll_image_book.setAdapter(adapter);
+        position = adapter.getItemCount()/2;
+        rcv_auto_scroll_image_book.scrollToPosition(position);
+        SnapHelper snapHelper = new LinearSnapHelper();
+        snapHelper.attachToRecyclerView(rcv_auto_scroll_image_book);
+        rcv_auto_scroll_image_book.smoothScrollBy(1,0);
+        rcv_auto_scroll_image_book.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState == 1)
+                    PauseAutoScroll();
+                else if(newState == 0)
+                    AutoScroll(rcv_auto_scroll_image_book);
+            }
+        });
+        final List<Book> book_like = new ArrayList<>();
+        final List<Book> book_view = new ArrayList<>();
+        for (int i =0;i < books.size();i++){
+            book_like.add(books.get(i));
+            book_view.add(books.get(i));
+        }
+        for (int i =0;i<book_like.size()-1;i++){
+            for(int j = i+1;j<book_like.size();j++){
+                if(book_like.get(i).getLikes() < book_like.get(j).getLikes()){
+                    Book tg = new Book();
+                    tg.setBook(book_like.get(i));
+                    book_like.get(i).setBook(book_like.get(j));
+                    book_like.get(j).setBook(tg);
+                }
+            }
+        }
 
-        ProgressBar progressBar = dialog.findViewById(R.id.progress_login);
-        Sprite style = new ThreeBounce();
-        progressBar.setIndeterminateDrawable(style);
-        ln_home_fragment.setVisibility(View.GONE);
-        dialog.show();
-        GetAPIBook(urlBook);
+        final LinearLayoutManager managerBXH = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
+        AdapterBXH adapterBXH = new AdapterBXH(book_like,getContext(),1,user);
+        rcv_item_bxh.setLayoutManager(managerBXH);
+        rcv_item_bxh.setAdapter(adapterBXH);
+
+        btn_like_bxh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i =0;i<book_like.size()-1;i++){
+                    for(int j = i+1;j<book_like.size();j++){
+                        if(book_like.get(i).getLikes() < book_like.get(j).getLikes()){
+                            Book tg = new Book();
+                            tg.setBook(book_like.get(i));
+                            book_like.get(i).setBook(book_like.get(j));
+                            book_like.get(j).setBook(tg);
+                        }
+                    }
+                }
+                AdapterBXH adapterBXH = new AdapterBXH(book_like,getContext(),1,user);
+                rcv_item_bxh.setLayoutManager(managerBXH);
+                rcv_item_bxh.setAdapter(adapterBXH);
+                btn_like_bxh.setBackgroundResource(R.drawable.background_select_bxh);
+                btn_view_bxh.setBackground(null);
+            }
+        });
+        btn_view_bxh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i =0;i<book_view.size()-1;i++){
+                    for(int j = i+1;j<book_view.size();j++){
+                        if(book_view.get(i).getView() < book_view.get(j).getView()){
+                            Book tg = new Book();
+                            tg.setBook(book_view.get(i));
+                            book_view.get(i).setBook(book_view.get(j));
+                            book_view.get(j).setBook(tg);
+                        }
+                    }
+                }
+                AdapterBXH adapterBXH = new AdapterBXH(book_view,getContext(),2,user);
+                rcv_item_bxh.setLayoutManager(managerBXH);
+                rcv_item_bxh.setAdapter(adapterBXH);
+                btn_view_bxh.setBackgroundResource(R.drawable.background_select_bxh);
+                btn_like_bxh.setBackground(null);
+            }
+        });
+
+        TypeBookNew();
+        TypeBookView();
+        TypeBookLike();
+//        final int i = scroll_home.getScrollY()+20;
+//        scroll_home.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+//            @Override
+//            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+//                if(i<scrollY)  rel_home.setVisibility(View.GONE);
+//                else    rel_home.setVisibility(View.VISIBLE);
+//            }
+//        });
         return view;
     }
 
@@ -449,100 +527,11 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        ln_home_fragment.setVisibility(View.VISIBLE);
-        dialog.dismiss();
-        List<String> list_img_book = new ArrayList<>();
-        for (int i = 0;i< books.size();i++)
-            list_img_book.add(books.get(i).getUrlBook());
-        manager = new LinearLayoutManager(getContext(),RecyclerView.HORIZONTAL,false);
-        adapter = new Adapter(getContext(),list_img_book);
-        rcv_auto_scroll_image_book.setLayoutManager(manager);
-        rcv_auto_scroll_image_book.setAdapter(adapter);
-        position = adapter.getItemCount()/2;
-        rcv_auto_scroll_image_book.scrollToPosition(position);
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(rcv_auto_scroll_image_book);
-        rcv_auto_scroll_image_book.smoothScrollBy(1,0);
-        rcv_auto_scroll_image_book.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                if(newState == 1)
-                    PauseAutoScroll();
-                else if(newState == 0)
-                    AutoScroll(rcv_auto_scroll_image_book);
-            }
-        });
-        final List<Book> book_like = new ArrayList<>();
-        final List<Book> book_view = new ArrayList<>();
-        for (int i =0;i < books.size();i++){
-            book_like.add(books.get(i));
-            book_view.add(books.get(i));
-        }
-        for (int i =0;i<book_like.size()-1;i++){
-            for(int j = i+1;j<book_like.size();j++){
-                if(book_like.get(i).getLikes() < book_like.get(j).getLikes()){
-                    Book tg = new Book();
-                    tg.setBook(book_like.get(i));
-                    book_like.get(i).setBook(book_like.get(j));
-                    book_like.get(j).setBook(tg);
-                }
-            }
-        }
 
-        for (int i =0;i<book_view.size()-1;i++){
-            for(int j = i+1;j<book_view.size();j++){
-                if(book_view.get(i).getView() < book_view.get(j).getView()){
-                    Book tg = new Book();
-                    tg.setBook(book_view.get(i));
-                    book_view.get(i).setBook(book_view.get(j));
-                    book_view.get(j).setBook(tg);
-                }
-            }
-        }
-
-        final LinearLayoutManager managerBXH = new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false);
-        AdapterBXH adapterBXH = new AdapterBXH(book_like,getContext(),1,user);
-        rcv_item_bxh.setLayoutManager(managerBXH);
-        rcv_item_bxh.setAdapter(adapterBXH);
-
-        btn_like_bxh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AdapterBXH adapterBXH = new AdapterBXH(book_like,getContext(),1,user);
-                rcv_item_bxh.setLayoutManager(managerBXH);
-                rcv_item_bxh.setAdapter(adapterBXH);
-                btn_like_bxh.setBackgroundResource(R.drawable.background_select_bxh);
-                btn_view_bxh.setBackground(null);
-            }
-        });
-        btn_view_bxh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AdapterBXH adapterBXH = new AdapterBXH(book_view,getContext(),2,user);
-                rcv_item_bxh.setLayoutManager(managerBXH);
-                rcv_item_bxh.setAdapter(adapterBXH);
-                btn_view_bxh.setBackgroundResource(R.drawable.background_select_bxh);
-                btn_like_bxh.setBackground(null);
-            }
-        });
-
-        TypeBookNew();
-        TypeBookView();
-        TypeBookLike();
-        final int i = scroll_home.getScrollY()+20;
-        scroll_home.setOnScrollChangeListener(new View.OnScrollChangeListener() {
-            @Override
-            public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
-                if(i<scrollY)  rel_home.setVisibility(View.GONE);
-                else    rel_home.setVisibility(View.VISIBLE);
-            }
-        });
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        books = new ArrayList<>();
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

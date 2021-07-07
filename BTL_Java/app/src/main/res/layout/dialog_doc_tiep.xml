@@ -2,44 +2,49 @@
 <LinearLayout
     android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:padding="10dp"
-    android:layout_marginHorizontal="20dp"
+    android:layout_marginHorizontal="30dp"
     android:orientation="vertical"
-    android:background="@android:color/white"
+    android:background="@drawable/background_dialog"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <TextView
         android:id="@+id/tv_het_money"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bạn cần đóng phí để đọc tiếp (100 điểm để mua!!!).\n Ấn có để thanh toán!!!"
         android:gravity="center"
         android:fontFamily="monospace"
         android:textColor="@android:color/black"
         android:textSize="20dp"
+        android:padding="10dp"
+        android:text="Bạn cần đóng phí để đọc tiếp (100 điểm để mua!!!).\n Ấn có để thanh toán!!!"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:weightSum="10"
-        android:layout_marginTop="10dp">
+        android:weightSum="10">
 
         <Button
             android:id="@+id/btn_khong"
-            android:layout_weight="4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Trở về"/>
-        <TextView
-            android:layout_weight="2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_marginLeft="-1dp"
+            android:layout_marginRight="-0.5dp"
+            android:layout_marginBottom="-1dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="5"
+            android:background="@drawable/background_btn_left"
+            android:text="Trở về" />
         <Button
             android:id="@+id/btn_co"
-            android:layout_weight="4"
+            android:layout_weight="5"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_btn_right"
+            android:layout_marginLeft="-0.5dp"
+            android:layout_marginRight="-1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="-1dp"
             android:text="Có"/>
     </LinearLayout>
 </LinearLayout>

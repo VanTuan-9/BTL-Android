@@ -29,8 +29,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.btl_java.AdminActivity;
 import com.example.btl_java.MainActivity;
 import com.example.btl_java.R;
 import com.github.ybq.android.spinkit.sprite.Sprite;
@@ -43,6 +45,7 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class ActivityLogin extends AppCompatActivity {
     EditText edttendn, edtmkdn;
@@ -53,11 +56,11 @@ public class ActivityLogin extends AppCompatActivity {
     String url = "https://api-user-last.herokuapp.com/api/users";
     CheckBox cbsaved;
     Dialog dialog;
-
+    int ktmkm = 0;
     static final String NAME_CACHE = "Account";
     static final String USERNAME_CACHE = "userName";
     static final String PASSWORD_CACHE = "passWord";
-
+    public static final String USERNAME = "Administrator";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ActionBar actionBar = getSupportActionBar();
@@ -90,35 +93,44 @@ private void DialogLogin(){
         @Override
         public void onResponse(String response) {
             result = response;
-            getJson();
+            getJson(1);
         }
     }, new Response.ErrorListener() {
         @Override
         public void onErrorResponse(VolleyError error) {
+            edttendn.setText("");
+            edtmkdn.setText("");
             Log.d("TAG", "onCreateView: ");
+            getJson(0);
         }
     });
     requestQueue.add(stringRequest);
     dialog.show();
 }
 
-    private void getJson(){
+    private void getJson(int mKT){
         list = new ArrayList<>();
         String username, password, email, phoneNumber, linkImg;
         double money;
         int id;
         try {
-            JSONArray jsonArray = new JSONArray(result);
-            for(int i  = 0; i < jsonArray.length(); i++){
-                JSONObject object = jsonArray.getJSONObject(i);
-                id = object.getInt("userID");
-                username = object.getString("userName");
-                password = object.getString("passWord");
-                money = object.getDouble("money");
-                email = object.getString("email");
-                phoneNumber = object.getString("phoneNumber");
-                linkImg = object.getString("linkImage");
-                list.add(new User(id,username,password,money,email,phoneNumber,linkImg));
+            if(mKT == 1){
+                JSONArray jsonArray = new JSONArray(result);
+                for(int i  = 0; i < jsonArray.length(); i++){
+                    JSONObject object = jsonArray.getJSONObject(i);
+                    id = object.getInt("userID");
+                    username = object.getString("userName");
+                    password = object.getString("passWord");
+                    money = object.getDouble("money");
+                    email = object.getString("email");
+                    phoneNumber = object.getString("phoneNumber");
+                    linkImg = object.getString("linkImage");
+                    list.add(new User(id,username,password,money,email,phoneNumber,linkImg));
+                }
+            }
+            else {
+                list = new ArrayList<>();
+                list.add(new User(0,"","",0,"","",""));
             }
             dialog.dismiss();
             btndn.setOnClickListener(new View.OnClickListener() {
@@ -126,47 +138,54 @@ private void DialogLogin(){
                 public void onClick(View v) {
                     String username = edttendn.getText().toString().trim();
                     String password = edtmkdn.getText().toString().trim();
-
-                    if(list == null && list.isEmpty()){
-                        Toast.makeText(ActivityLogin.this, "Lỗi đăng nhập! Vui lòng đăng nhập sau.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    User user =new User();
-                    boolean checkUser = false;
-                    for(int i = 0; i < list.size(); i++){
-                        if(username.equals(list.get(i).getUsername()) && password.equals(list.get(i).getPassword())){
-                            checkUser = true;
-                            user = list.get(i);
-                            break;
-                        }
-                    }
-                    if (checkUser == true){
-                        SharedPreferences sharedPreferences = getSharedPreferences(NAME_CACHE,MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        if(cbsaved.isChecked()){
-                            editor.putString(USERNAME_CACHE,edttendn.getText().toString());
-                            editor.putString(PASSWORD_CACHE,edtmkdn.getText().toString());
-                            editor.commit();
-                        }
-                        else{
-                            editor.clear().commit();
-                        }
-                        Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
-                        intent.putExtra("User", user);
+                    if(edttendn.getText().toString().equals(USERNAME)){
+                        Intent intent = new Intent(getApplicationContext(), AdminActivity.class);
                         startActivity(intent);
+                        finish();
                     }
-                    else{
-                        boolean checkPassword = false;
-                        for (int i = 0; i < list.size(); i++){
-                            if (username.compareTo(list.get(i).getUsername()) == 0 && password.compareTo(list.get(i).getPassword()) != 0){
-                                checkPassword = true;
+
+                    else {
+                        if(list == null){
+                            list.add(new User(0,"","",0,"","",""));
+                        }
+                        User user =new User();
+                        boolean checkUser = false;
+                        for(int i = 0; i < list.size(); i++){
+                            if(username.equals(list.get(i).getUsername()) && password.equals(list.get(i).getPassword())){
+                                checkUser = true;
+                                user = list.get(i);
                                 break;
                             }
                         }
-                        if (checkPassword){
-                            tvErr.setText("Sai mật khẩu");
+                        if (checkUser == true && edttendn.getText().length() != 0 && edtmkdn.getText().length() != 0){
+                            SharedPreferences sharedPreferences = getSharedPreferences(NAME_CACHE,MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            if(cbsaved.isChecked()){
+                                editor.putString(USERNAME_CACHE,edttendn.getText().toString());
+                                editor.putString(PASSWORD_CACHE,edtmkdn.getText().toString());
+                                editor.commit();
+                            }
+                            else{
+                                editor.clear().commit();
+                            }
+                            Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
+                            intent.putExtra("UserName", user.getUsername());
+                            startActivity(intent);
+                            finish();
                         }
-                        else tvErr.setText("Tài khoản không hợp lệ");
+                        else{
+                            boolean checkPassword = false;
+                            for (int i = 0; i < list.size(); i++){
+                                if (username.compareTo(list.get(i).getUsername()) == 0 && password.compareTo(list.get(i).getPassword()) != 0){
+                                    checkPassword = true;
+                                    break;
+                                }
+                            }
+                            if (checkPassword){
+                                tvErr.setText("Sai mật khẩu");
+                            }
+                            else tvErr.setText("Tài khoản không hợp lệ");
+                        }
                     }
                 }});
             tvdk.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +197,14 @@ private void DialogLogin(){
             tvquenmk.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    if(list.get(list.size()-1).getId() == 0) {
+                        Toast.makeText(ActivityLogin.this, "Chức năng không hỗ trợ khi chưa đăng nhập lần nào!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    else if(ktmkm != 0){
+                        Toast.makeText(ActivityLogin.this, "Không thể thực hiện!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     String username = edttendn.getText().toString().trim();
 
                     boolean checkUsername = false;
@@ -232,7 +259,9 @@ private void DialogLogin(){
                     if(email.equals(list.get(i).getEmail()))
                         checkEmail = true;
                 }
-                if(checkUser){
+                if(edtEmail.getText().length() == 0 || edtmkdk.getText().length() == 0 || edttendk.getText().length() == 0)
+                    Toast.makeText(ActivityLogin.this, "Chưa điền đủ thông tin.", Toast.LENGTH_SHORT).show();
+                else if(checkUser){
                     tvErrDK.setText("Tài khoản đã tồn tại");
                 }
                 else if(checkEmail)
@@ -285,7 +314,7 @@ private void DialogLogin(){
                     dialog.cancel();
                     Toast.makeText(getBaseContext(),"Đăng ký thành công",Toast.LENGTH_LONG).show();
                     try {
-                        list.add(new User(username,password,jsonObject.getInt("money"),email,"0","https://i.pinimg.com/236x/2c/13/08/2c130877570e4d477694d1236b0b94e5.jpg"));
+                        list.add(new User(0,username,password,jsonObject.getInt("money"),email,"0","https://i.pinimg.com/236x/2c/13/08/2c130877570e4d477694d1236b0b94e5.jpg"));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -312,64 +341,62 @@ private void DialogLogin(){
         alert.setView(alertLayout);
         alert.setCancelable(false);
         final EditText edtmkm = alertLayout.findViewById(R.id.edtmkm);
-        final EditText edtnlmk = alertLayout.findViewById(R.id.edtnlmk);
         Button btnxn = alertLayout.findViewById(R.id.btnxn);
         TextView tvql = (TextView)alertLayout.findViewById(R.id.tvql);
         final TextView tvErrMk = alertLayout.findViewById(R.id.tvErrMK);
         final AlertDialog dialog = alert.create();
+        Random random = new Random();
+        final int kt = random.nextInt((999999-100000)+1)+100000;
         btnxn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String password = edtmkm.getText().toString().trim();
-                String repass = edtnlmk.getText().toString().trim();
-                if(password.equals(repass)){
-                    JSONObject jsonObject = new JSONObject();
-                    try {
-                        jsonObject.put("passWord", password);
-                    }
-                    catch (JSONException e){
-                        e.printStackTrace();
-                    }
-                    final String requestbody = jsonObject.toString();
-                    StringRequest stringRequest = new StringRequest(Request.Method.PATCH, url +"/"+ id.get(i).getId(), new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-
+                    if(edtmkm.getText().toString().equals(id.get(i).getEmail())) {
+                        JSONObject jsonObject = new JSONObject();
+                        try {
+                            jsonObject.put("passWord", kt);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
                         }
+                        final String requestbody = jsonObject.toString();
+                        StringRequest stringRequest = new StringRequest(Request.Method.PATCH, url + "/" + id.get(i).getId(), new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                dialog.cancel();
+                                Toast.makeText(getBaseContext(), "Mật khẩu đã được gửi về email.", Toast.LENGTH_SHORT).show();
+                                edtmkdn.setText("");
+                                ktmkm ++;
+                            }
                         }, new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
 
-                        }
-                    }){
-                        @Override
-                        public String getBodyContentType() {
-                            return "application/json; charset = utf-8";
-                        }
-                        @Override
-                        public byte[] getBody() throws AuthFailureError {
-                            if(requestbody==null) return null;
-                            else {
-                                try {
-                                    return requestbody.getBytes("utf-8");
-                                } catch (UnsupportedEncodingException e) {
-                                    e.printStackTrace();
-                                    return null;
+                            }
+                        }) {
+                            @Override
+                            public String getBodyContentType() {
+                                return "application/json; charset = utf-8";
+                            }
+
+                            @Override
+                            public byte[] getBody() throws AuthFailureError {
+                                if (requestbody == null) return null;
+                                else {
+                                    try {
+                                        return requestbody.getBytes("utf-8");
+                                    } catch (UnsupportedEncodingException e) {
+                                        e.printStackTrace();
+                                        return null;
+                                    }
                                 }
                             }
-                        }
-                    };
-                    requestQueue.add(stringRequest);
-
-                    edtmkdn.setText(password);
-                    id.get(i).setPassword(password);
-                    dialog.cancel();
-                    tvErr.setText("");
-                    Toast.makeText(getBaseContext(),"Đổi mật khẩu thành công",Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    tvErrMk.setText("Hai trường không trùng khớp");
-                }
+                        };
+                        requestQueue.add(stringRequest);
+                        JavaMailAPI javaMailAPI = new JavaMailAPI(ActivityLogin.this, edtmkm.getText().toString(), "Quên mật khẩu", "Mật khẩu mới để truy cập app của bạn là: " + kt);
+                        javaMailAPI.execute();
+                        id.get(i).setPassword(String.valueOf(kt));
+                        tvErr.setText("");
+                    }
+                    else Toast.makeText(ActivityLogin.this, "Email không đúng...", Toast.LENGTH_SHORT).show();
             }
         });
         tvql.setOnClickListener(new View.OnClickListener() {

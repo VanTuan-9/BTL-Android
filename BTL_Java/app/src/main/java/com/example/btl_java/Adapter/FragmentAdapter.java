@@ -1,5 +1,7 @@
 package com.example.btl_java.Adapter;
 
+import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -10,22 +12,19 @@ import com.example.btl_java.Fragment.HomeFragment;
 import com.example.btl_java.Fragment.SearchFragment;
 import com.example.btl_java.Fragment.UpBookFragment;
 import com.example.btl_java.RecycleView.Home.ListChild.Book;
-import com.example.btl_java.RecycleView.Home.ListChild.ContentBook;
 import com.example.btl_java.login.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class FragmentAdapter extends FragmentPagerAdapter {
-
-    List<Book> books;
     User user;
+    List<Book> books;
 //    List<ContentBook> contentBooks;
 
-    public FragmentAdapter(@NonNull FragmentManager fm, int behavior, List<Book> books,User user) {
+    public FragmentAdapter(@NonNull FragmentManager fm, int behavior, User user, List<Book> books) {
         super(fm, behavior);
-        this.books = books;
         this.user = user;
+        this.books = books;
 //        this.contentBooks = contentBooks;
     }
 
@@ -34,20 +33,25 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return HomeFragment.newInstance(books,user);
+                return HomeFragment.newInstance(user,books);
             case 1:
-                return SearchFragment.newInstance(books,user);
+                return SearchFragment.newInstance(user);
             case 2:
-                return UpBookFragment.newInstance();
+                return UpBookFragment.newInstance(user.getId());
             case 3:
-                return AccountFragment.newInstance(books,user);
+                return AccountFragment.newInstance(user);
             default:
-                return HomeFragment.newInstance(books,user);
+                return HomeFragment.newInstance(user, books);
         }
     }
 
     @Override
     public int getCount() {
         return 4;
+    }
+
+    @Override
+    public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
+        super.destroyItem(container, position, object);
     }
 }

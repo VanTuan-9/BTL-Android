@@ -31,16 +31,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AccountFragment extends Fragment {
-    public static AccountFragment newInstance(List<Book> books, User user) {
+    public static AccountFragment newInstance(User user) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList("books", (ArrayList<? extends Parcelable>) books);
         args.putParcelable("User", user);
         AccountFragment fragment = new AccountFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    private List<Book> books = new ArrayList<>();
     private User user = new User();
     User user1;
     ImageView avtUser, back;
@@ -52,7 +50,6 @@ public class AccountFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.layoutfragmentuser,container,false);
-        books = getArguments().getParcelableArrayList("books");
         user = getArguments().getParcelable("User");
         AnhXa(view);
         GetAPIUsser(user.getId());

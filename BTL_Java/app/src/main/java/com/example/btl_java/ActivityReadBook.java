@@ -136,27 +136,29 @@ public class ActivityReadBook extends AppCompatActivity {
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        Change(response);
+                        Change(response,0);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Change(new JSONArray(),1);
             }
         });
         JsonVolley.getInstance(getApplicationContext()).getRequestQueue().add(request);
     }
 
-    private void Change(JSONArray response) {
+    private void Change(JSONArray response,int mKT) {
         JSONObject jsonObject;
         final List<ReadedBook> readedBooks = new ArrayList<>();
-        for (int i = 0; i < response.length(); i++) {
-            try {
-                jsonObject = response.getJSONObject(i);
-                readedBooks.add(new ReadedBook(jsonObject.getInt("book_id_reading"),jsonObject.getInt("user_id_reading")));
+        if(mKT == 0){
+            for (int i = 0; i < response.length(); i++) {
+                try {
+                    jsonObject = response.getJSONObject(i);
+                    readedBooks.add(new ReadedBook(jsonObject.getInt("book_id_reading"),jsonObject.getInt("user_id_reading")));
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
         ibtn_right_page.setOnClickListener(new View.OnClickListener() {
@@ -169,7 +171,7 @@ public class ActivityReadBook extends AppCompatActivity {
                         tv_page_book.setText("Chương "+ (x + 1) + " \"FREE\"");
                     else{
                         int kt = 1;
-                        if(x == 2 && readedBooks.size() > 0){
+                        if(x == 2 && readedBooks != null){
                             for (int i = 0; i < readedBooks.size(); i++) {
                                 if(book.getIdBook() == readedBooks.get(i).getId_book() && user.getId() == readedBooks.get(i).getId_user()){
                                     kt = 0;

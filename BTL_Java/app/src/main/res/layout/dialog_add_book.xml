@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:background="#FAF1E1"
+    android:orientation="vertical"
+    android:weightSum="10"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Điền thông tin sách"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:background="@android:color/holo_orange_light"
+        android:paddingVertical="5dp"/>
+
+    <ScrollView
+        android:layout_weight="9"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="10"
+            android:orientation="vertical"
+            android:background="@drawable/customborder"
+            android:padding="10dp">
+
+            <EditText
+                android:id="@+id/edt_name_bookup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tên sách..."
+                android:textColorHint="#7E7E7E"
+                android:textColor="@color/black"
+                android:textSize="15dp"
+                android:paddingVertical="20dp"
+                >
+            </EditText>
+
+            <EditText
+                android:id="@+id/edt_language_bookup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ngôn ngữ..."
+                android:textColor="@color/black"
+                android:textColorHint="#7E7E7E"
+                android:paddingVertical="20dp"
+                android:textSize="15dp">
+            </EditText>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đã hoàn thành?"
+                    android:layout_centerVertical="true"/>
+                <CheckBox
+                    android:id="@+id/cb_status_bookup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:checked="false"/>
+            </RelativeLayout>
+
+
+            <EditText
+                android:id="@+id/edt_describe_bookup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tóm tắt nội dung..."
+                android:textColor="@color/black"
+                android:textColorHint="#7E7E7E"
+                android:paddingVertical="20dp"
+                android:textSize="15dp">
+            </EditText>
+            <EditText
+                android:id="@+id/edt_content_bookup"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nội dung sách..."
+                android:textColor="@color/black"
+                android:textColorHint="#7E7E7E"
+                android:paddingVertical="20dp"
+                android:textSize="15dp">
+            </EditText>
+        </LinearLayout>
+
+    </ScrollView>
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="20dp"
+        android:gravity="center_vertical">
+
+        <Button
+            android:id="@+id/btn_return"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy bỏ"
+            android:background="@drawable/background_dialog"
+            android:textSize="18sp"
+            android:layout_alignParentLeft="true"/>
+        <Button
+            android:id="@+id/btn_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gửi"
+            android:layout_alignParentRight="true"
+            android:textSize="18sp"
+            android:background="@drawable/background_dialog"/>
+    </RelativeLayout>
+</LinearLayout>
